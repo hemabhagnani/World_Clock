@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,6 +15,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body:SafeArea(
         child:Column(
+        mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton.icon(
                 onPressed: (){
@@ -21,7 +23,27 @@ class _HomeState extends State<Home> {
                 },
                 icon: Icon(Icons.edit_location),
                 label:Text("Edit Location"),
-            )
+            ),
+            SizedBox(height: 2.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                data["location"],
+                style: TextStyle(
+                  fontSize: 25.0,
+                  letterSpacing: 2.0
+                ),
+                ),
+              ],
+            ),
+            Text(
+              data["time"],
+              style:TextStyle(
+                fontSize: 40.0,
+                letterSpacing: 2.0,
+              )
+            ),
           ],
         ),
       )
