@@ -11,7 +11,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    data=ModalRoute.of(context).settings.arguments;
+    data=data.isNotEmpty ? data:ModalRoute.of(context).settings.arguments;
     String imagepath= data["isDaytime"]? "https://cdn.pixabay.com/photo/2016/11/18/16/01/tree-1835519_960_720.jpg":"https://cdn.pixabay.com/photo/2019/09/08/15/29/moon-4461260_960_720.jpg";
     String topcolor=data["isDaytime"] ? 'Colors.blue':'Colors.blue[900]';
     return Scaffold(
@@ -29,8 +29,16 @@ class _HomeState extends State<Home> {
 
               children: <Widget>[
                 FlatButton.icon(
-                    onPressed: (){
-                      Navigator.pushNamed(context, '/location');
+                    onPressed: () async {
+                      dynamic result = await Navigator.pushNamed(context, '/location');
+                      setState(() {
+                        data={
+                          "time":result["time"],
+                          "location":result["location"],
+                          "flag":result["flag"],
+                          "isDaytime":result["isDaytime"],
+                        };
+                      });
                     },
                     icon: Icon(Icons.edit_location,color:Colors.white),
                     label:Text("Edit Location",style:TextStyle(
