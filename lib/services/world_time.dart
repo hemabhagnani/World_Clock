@@ -23,13 +23,18 @@ class WorldTime {
       Map data = jsonDecode(response.body);
       //get the time and offset
       String datetime = data["datetime"];
-      String offset_hrs = data["utc_offset"].substring(1, 3);
-      String offset_min = data["utc_offset"].substring(4, 6);
+      int offset_hrs = int.parse(data['utc_offset'].substring(1,3));
+      int offset_min = int.parse(data['utc_offset'].substring(4,6));
+
+      if (data['utc_offset'].substring(0, 1) == "-") {
+        offset_hrs = -offset_hrs;
+        offset_min = -offset_min;
+      }
       //Create DateTime object
       DateTime now = DateTime.parse(datetime);
       //add offset hrs and offset minutes to datetime
       now = now.add(Duration(
-          hours: int.parse(offset_hrs), minutes: int.parse(offset_min)));
+          hours: offset_hrs, minutes: offset_min));
       isDaytime=(now.hour >5 && now.hour<20) ? true:false;
       time = DateFormat.jm().format(now);
     }
